@@ -1,0 +1,222 @@
+:root {
+    --emerald: #10b981;
+    --emerald-glow: rgba(16, 185, 129, 0.4);
+    --bg-dark: #0a0a0c;
+    --card-bg: rgba(18, 18, 22, 0.7);
+}
+
+#loader {
+    position: fixed;
+    inset: 0;
+    background-color: #0a0a0c;
+    z-index: 99999; /* Fica acima de TUDO */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.loader-wrapper {
+    text-align: center;
+    width: 300px;
+}
+
+.terminal-text {
+    text-shadow: 0 0 8px var(--emerald);
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--emerald);
+    font-size: 14px;
+    margin-bottom: 15px;
+    min-height: 20px;
+}
+
+.loader-progress {
+    width: 100%;
+    height: 2px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--emerald);
+    box-shadow: 0 0 15px var(--emerald);
+    animation: loadingBar 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes loadingBar {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* Classe para sumir com o loader */
+.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #f4f4f5;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+.grid-bg {
+    background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.glass {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.typing {
+    overflow: hidden;
+    border-right: .15em solid var(--emerald);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .10em;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--emerald); } }
+
+.card-service { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.card-service:hover {
+    border-color: var(--emerald);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px -10px var(--emerald-glow);
+}
+
+.jairo-photo {
+    filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.1));
+    transition: all 0.5s ease;
+}
+.jairo-photo:hover {
+    filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.3));
+    transform: scale(1.03);
+}
+
+#particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    z-index: -1;
+}
+
+/* Tooltip do Globo */
+.scene-tooltip {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#globeViz canvas { outline: none; }
+
+#particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; 
+    left: 0;
+    z-index: -1;
+    transition: transform 0.1s linear;
+}
+
+.hero-section {
+    position: relative;
+    /* Overlay escuro de 90% para a imagem ficar bem sutil ao fundo */
+    background: linear-gradient(rgba(10, 15, 20, 0.9), rgba(10, 15, 20, 0.9)), 
+                url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efeito Parallax */
+    z-index: 1;
+}
+
+.hero-section .max-w-4xl {
+    position: relative;
+    z-index: 10;
+}
+
+/* Configuração Base dos Cards de Marketing */
+.card-market {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Camada da Imagem (Invisível por padrão) */
+.card-market::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1; /* Fica atrás do texto */
+}
+
+/* Aparece suavemente no Hover */
+.card-market:hover::before {
+    opacity: 0.15;
+}
+
+/* Imagem específica para o Card 1: OSINT */
+/* Atualize apenas este bloco no seu style.css */
+.bg-osint::before {
+    background-image: url('https://images.unsplash.com/photo-1577401159468-3bbc7ee440b5?q=80&w=1170&auto=format&fit=crop');
+}
+
+/* Imagem específica para o Card 2: Sistemas */
+.bg-systems::before {
+    background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2000');
+}
+
+/* Imagem específica para o Card 3: Dashboards */
+.bg-dash::before {
+    background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000');
+}
+
+/* Cursor Padrão mas em Verde Esmeralda (via SVG Data URI) */
+html, body, a, button {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%2310b981'%3E%3Cpath d='M7 2l12 11.2-5.8.8 3.3 6-2.5 1.4-3.4-6.1L7 21V2z'/%3E%3C/svg%3E"), auto;
+}
+
+/* Estilo das partículas do rastro */
+.trail-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000; /* Garante que fique acima de tudo */
+    transform: translate(-50%, -50%);
+    animation: trailFade 0.8s ease-out forwards;
+    filter: blur(1px); /* Suaviza o rastro */
+}
+
+@keyframes trailFade {
+    0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.5); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.1); }
+}

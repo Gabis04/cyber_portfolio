@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jairo Gabriel | Cyber & OSINT Solutions</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <meta name="description" content="Jairo Gabriel - Especialista em Cybersecurity, OSINT e Hacking Ético. Soluções de inteligência digital e defesa estratégica.">
+<meta name="keywords" content="Cybersecurity, OSINT, Hacking Ético, Automação, Jairo Gabriel">
+
+<meta property="og:title" content="Jairo Gabriel | Cyber & OSINT Solutions">
+<meta property="og:description" content="Segurança não é reação. É antecipação. Confira meu portfólio de soluções digitais.">
+<meta property="og:image" content="assets/img/jairo.png">
+<meta property="og:type" content="website">
+
+<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2092/2092663.png">
+
+</head>
+
+<body class="grid-bg">
+    
+    <div id="loader">
+    <div class="loader-wrapper">
+        <div class="terminal-text" id="loader-text"></div>
+        <div class="loader-progress">
+            <div class="loader-bar"></div>
+        </div>
+        <p class="mono text-[10px] text-emerald-500/50 mt-4 tracking-[0.2em] uppercase">
+            Establishing secure connection...
+        </p>
+    </div>
+</div>
+   
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <canvas id="particles"></canvas>
+
+    <a href="https://wa.me/5511996928628?text=Olá%20Jairo,%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20um%20diagnóstico." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white p-4 rounded-full shadow-lg hover:bg-emerald-500 transition-all flex items-center justify-center glow-hover">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <nav class="fixed w-full z-40 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-extrabold tracking-tighter uppercase text-white">
+                Jairo<span class="text-emerald-500">Gabriel</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-xs font-bold tracking-widest uppercase text-white">
+                <a href="#sobre" class="hover:text-emerald-400 transition">Sobre</a>
+                <a href="#servicos" class="hover:text-emerald-400 transition">Serviços</a>
+                <a href="#threat-map" class="hover:text-emerald-400 transition">Global Map</a>
+                <a href="#contato" class="text-emerald-500 border border-emerald-500/30 px-4 py-1 rounded hover:bg-emerald-500 hover:text-white transition">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 relative overflow-hidden">
+        <div class="max-w-4xl relative z-10">
+            <div class="inline-block mb-4 py-1 px-3 glass rounded-full border border-emerald-500/20">
+                <span class="mono text-emerald-500 text-xs uppercase tracking-tighter">● System Status: Online & Protected</span>
+            </div>
+            <h1 class="text-4xl md:text-7xl font-black mb-6 tracking-tight leading-none text-white">
+                JG CYBER & <span class="text-emerald-500 italic">OSINT</span> SOLUTIONS
+            </h1>
+            <div class="flex justify-center mb-8">
+                <p class="typing mono text-emerald-500 text-sm md:text-xl">Segurança não é reação. É antecipação.</p>
+            </div>
+            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                Especialista em identificar vulnerabilidades e mapear exposição digital com mentalidade ofensiva e defesa estratégica.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#contato" class="bg-emerald-600 text-white px-8 py-4 rounded font-bold glow-hover transition-all">SOLICITAR ANÁLISE</a>
+                <a href="https://www.linkedin.com/in/jairo-gabriel-1a9a10294" target="_blank" class="glass px-8 py-4 rounded font-bold hover:bg-white/10 transition-all text-white">VER LINKEDIN</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre" class="py-32 max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative flex justify-center">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/10 blur-[100px] rounded-full"></div>
+                <img src="assets/img/jairo.png" alt="Jairo Gabriel" class="jairo-photo relative z-10 w-full max-w-sm">
+                <div class="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-emerald-500/30"></div>
+            </div>
+            <div>
+                <h2 class="text-emerald-500 mono mb-4 font-bold text-lg">// IDENTIDADE_CONFIRMADA</h2>
+                <h3 class="text-4xl font-bold mb-6 italic text-white">A melhor defesa é o conhecimento do ataque.</h3>
+                <p class="text-gray-400 leading-relaxed mb-6 text-lg">
+                    Sou Jairo Gabriel, profissional de <strong>Análise e Desenvolvimento de Sistemas</strong> focado em transformar a lógica de programação em barreiras de segurança intransponíveis.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 glass rounded border-l-4 border-emerald-500">
+                        <span class="block text-white font-bold tracking-tighter uppercase">Formado em ADS</span>
+                        <span class="text-gray-500 uppercase text-[10px] mono">Base Técnica</span>
+                    </div>
+                    <div class="p-4 glass rounded border-l-4 border-emerald-500">
+                        <span class="block text-white font-bold tracking-tighter uppercase">Ética Total</span>
+                        <span class="text-gray-500 uppercase text-[10px] mono">Conformidade Legal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-32 bg-black/40">
+        <div class="max-w-6xl mx-auto px-6 mb-16 text-center md:text-left">
+            <h2 class="text-emerald-500 mono font-bold">// CAPACIDADES</h2>
+            <h3 class="text-4xl font-bold uppercase tracking-tighter text-white">Serviços Estratégicos</h3>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+            <div class="card-service glass p-10 rounded-2xl relative group overflow-hidden">
+                <i class="fas fa-search-plus text-4xl text-emerald-500 mb-6 transition"></i>
+                <h4 class="text-xl font-bold mb-4 uppercase text-white">OSINT & Footprint</h4>
+                <p class="text-gray-400 text-sm">Mapeamento de exposição de dados e análise de vazamentos públicos.</p>
+            </div>
+            <div class="card-service glass p-10 rounded-2xl relative group overflow-hidden">
+                <i class="fas fa-user-shield text-4xl text-emerald-500 mb-6 transition"></i>
+                <h4 class="text-xl font-bold mb-4 uppercase text-white">Hacking Ético</h4>
+                <p class="text-gray-400 text-sm">Testes de intrusão autorizados para identificar falhas críticas.</p>
+            </div>
+            <div class="card-service glass p-10 rounded-2xl relative group overflow-hidden">
+                <i class="fas fa-microchip text-4xl text-emerald-500 mb-6 transition"></i>
+                <h4 class="text-xl font-bold mb-4 uppercase text-white">Automação & Dev</h4>
+                <p class="text-gray-400 text-sm">Soluções web seguras e automação inteligente para negócios.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-zinc-950/50 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-emerald-500 mono font-bold">// CASE_SOLVERS</h2>
+                <h3 class="text-4xl font-bold text-white uppercase tracking-tighter">Onde a tecnologia encontra a estratégia</h3>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+    <div class="card-market bg-osint p-8 glass rounded-3xl border-b-4 border-b-emerald-500/30 hover:border-b-emerald-500 transition-all">
+        <p class="text-emerald-400 font-bold mb-4 italic">"Precisando encontrar alguém?"</p>
+        <h4 class="text-white text-xl font-bold mb-3 uppercase">Inteligência Digital</h4>
+        <p class="text-gray-400 text-sm italic">O rastro digital nunca mente. Levantamento OSINT para fins corporativos ou pessoais.</p>
+    </div>
+
+    <div class="card-market bg-systems p-8 glass rounded-3xl border-b-4 border-b-emerald-500/30 hover:border-b-emerald-500 transition-all">
+        <p class="text-emerald-400 font-bold mb-4 italic">"Cansado de papéis?"</p>
+        <h4 class="text-white text-xl font-bold mb-3 uppercase">Sistemas Exclusivos</h4>
+        <p class="text-gray-400 text-sm italic">Abandone planilhas confusas. Sistemas web sob medida para sua gestão total.</p>
+    </div>
+
+    <div class="card-market bg-dash p-8 glass rounded-3xl border-b-4 border-b-emerald-500/30 hover:border-b-emerald-500 transition-all">
+        <p class="text-emerald-400 font-bold mb-4 italic">"Dashboards Precisos?"</p>
+        <h4 class="text-white text-xl font-bold mb-3 uppercase">Automação Inteligente</h4>
+        <p class="text-gray-400 text-sm italic">Dados brutos transformados em decisões. Automação SOC para seu negócio.</p>
+    </div>
+</div>
+            <div class="mt-16 text-center">
+                <p class="text-gray-300 text-xl mb-6 tracking-tight">Não importa o desafio técnico, a solução existe.</p>
+                <a href="#contato" class="text-emerald-500 font-bold text-2xl hover:text-emerald-400 transition tracking-tighter uppercase">
+                    Basta me chamar <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="threat-map" class="bg-black/80 relative">
+        <div class="max-w-6xl mx-auto px-6 pt-24 mb-10 relative z-10 pointer-events-none text-center md:text-left">
+            <h2 class="text-emerald-500 mono font-bold">// GLOBAL_THREAT_MONITOR</h2>
+            <h3 class="text-4xl font-bold uppercase tracking-tighter text-white">Panorama de Incidentes</h3>
+            <p class="text-gray-400 mt-4 max-w-xl">Dados baseados em relatórios anuais de inteligência por região.</p>
+        </div>
+        <div id="globeViz" class="w-full h-[600px] md:h-[800px] cursor-grab active:cursor-grabbing"></div>
+    </section>
+
+    <section id="contato" class="py-32 bg-black/60">
+        <div class="max-w-4xl mx-auto px-6 text-center text-white">
+            <h2 class="text-4xl font-black mb-4 uppercase tracking-tighter">Inicie sua Defesa</h2>
+            <div class="grid md:grid-cols-3 gap-6 mt-12">
+                <a href="mailto:lilhuskyy@gmail.com" class="glass p-8 rounded-2xl hover:bg-emerald-500/5 transition">
+                    <i class="fas fa-envelope text-2xl text-emerald-500 mb-4"></i>
+                    <span class="block text-sm font-bold opacity-70">EMAIL</span>
+                </a>
+                <a href="https://wa.me/5511996928628" target="_blank" class="glass p-8 rounded-2xl hover:bg-emerald-500/5 transition">
+                    <i class="fab fa-whatsapp text-2xl text-emerald-500 mb-4"></i>
+                    <span class="block text-sm font-bold opacity-70">WHATSAPP</span>
+                </a>
+                <a href="https://www.linkedin.com/in/jairo-gabriel-1a9a10294" target="_blank" class="glass p-8 rounded-2xl hover:bg-emerald-500/5 transition">
+                    <i class="fab fa-linkedin text-2xl text-emerald-500 mb-4"></i>
+                    <span class="block text-sm font-bold opacity-70">LINKEDIN</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/5 text-center bg-black">
+        <p class="text-gray-600 text-[10px] mono uppercase tracking-[0.3em]">
+            &copy; 2026 JAIRO GABRIEL // ETHICAL HACKER // LGPD COMPLIANT
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/globe.gl"></script>
+    <script>
+        // PARTÍCULAS
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray = [];
+
+        window.addEventListener("scroll", () => {
+            const scrolled = window.scrollY;
+            canvas.style.transform = `translateY(${scrolled * 0.1}px)`;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = "rgba(16,185,129,0.3)";
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 60; i++) particlesArray.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    const dx = particlesArray[a].x - particlesArray[b].x;
+                    const dy = particlesArray[a].y - particlesArray[b].y;
+                    const distance = dx * dx + dy * dy;
+                    if (distance < 15000) {
+                        ctx.strokeStyle = `rgba(16,185,129,${1 - distance/15000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(p => { p.update(); p.draw(); });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+        init(); animate();
+
+// GLOBO
+// --- 2. LÓGICA DO GLOBO (ATAQUES + BRILHO + FOCO) ---
+
+// Base de dados expandida para evitar "N/A" nos principais países
+const cyberData = {
+    // Américas
+    "Brazil": { leaks: "45.2M", phishing: "12.1M", intrusions: "1.2M" },
+    "United States of America": { leaks: "128.5M", phishing: "42.3M", intrusions: "5.1M" },
+    "Mexico": { leaks: "22.1M", phishing: "8.4M", intrusions: "600k" },
+    "Argentina": { leaks: "12.4M", phishing: "3.2M", intrusions: "150k" },
+    "Canada": { leaks: "18.2M", phishing: "6.1M", intrusions: "400k" },
+    "Colombia": { leaks: "9.5M", phishing: "2.8M", intrusions: "110k" },
+    "Chile": { leaks: "5.1M", phishing: "1.5M", intrusions: "85k" },
+
+    // Europa
+    "Russia": { leaks: "92.4M", phishing: "31.2M", intrusions: "8.4M" },
+    "Germany": { leaks: "15.8M", phishing: "5.2M", intrusions: "820k" },
+    "France": { leaks: "14.1M", phishing: "4.9M", intrusions: "750k" },
+    "United Kingdom": { leaks: "22.5M", phishing: "9.4M", intrusions: "1.1M" },
+    "Italy": { leaks: "11.2M", phishing: "3.1M", intrusions: "400k" },
+    "Spain": { leaks: "9.8M", phishing: "2.7M", intrusions: "320k" },
+    "Portugal": { leaks: "2.1M", phishing: "800k", intrusions: "45k" },
+    "Ukraine": { leaks: "35.2M", phishing: "10.1M", intrusions: "4.2M" },
+
+    // Ásia e Oceania
+    "China": { leaks: "215.4M", phishing: "82.5M", intrusions: "14.8M" },
+    "India": { leaks: "142.1M", phishing: "58.2M", intrusions: "9.2M" },
+    "Japan": { leaks: "10.5M", phishing: "2.1M", intrusions: "300k" },
+    "South Korea": { leaks: "12.8M", phishing: "4.2M", intrusions: "550k" },
+    "Australia": { leaks: "8.4M", phishing: "2.5M", intrusions: "210k" },
+    "Israel": { leaks: "18.2M", phishing: "7.4M", intrusions: "3.1M" },
+
+    // África
+    "South Africa": { leaks: "11.2M", phishing: "4.1M", intrusions: "280k" },
+    "Nigeria": { leaks: "15.4M", phishing: "9.2M", intrusions: "450k" },
+    "Egypt": { leaks: "8.1M", phishing: "2.4M", intrusions: "180k" }
+};
+
+// Gera 20 ataques cibernéticos aleatórios (Arcos Animados)
+const arcsData = [...Array(20).keys()].map(() => ({
+    startLat: (Math.random() - 0.5) * 180,
+    startLng: (Math.random() - 0.5) * 360,
+    endLat: (Math.random() - 0.5) * 180,
+    endLng: (Math.random() - 0.5) * 360,
+    color: ['#10b981', '#ff4d4d', '#3b82f6'][Math.floor(Math.random() * 3)] // Verde, Vermelho ou Azul
+}));
+
+const world = Globe()
+    (document.getElementById('globeViz'))
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .backgroundImageUrl(null)
+    
+    // Configuração dos Ataques (Arcos)
+    .arcsData(arcsData)
+    .arcColor('color')
+    .arcDashLength(0.4)
+    .arcDashGap(4)
+    .arcDashAnimateTime(1500)
+    .arcStroke(0.5)
+    
+    // Configuração do Brilho de Clique (Anéis pulsantes)
+    .ringColor(() => '#10b981')
+    .ringMaxRadius(10)
+    .ringPropagationSpeed(3)
+    .ringRepeatPeriod(800)
+
+    // Visual dos Países
+    .polygonCapColor(() => 'rgba(16, 185, 129, 0.1)')
+    .polygonSideColor(() => 'rgba(0, 0, 0, 0.2)')
+    .polygonStrokeColor(() => '#10b981')
+    
+    // INTERAÇÃO DE CLIQUE
+    .onPolygonClick((polygon, event, { lat, lng, altitude }) => {
+        // Cria o efeito de brilho no local exato do clique
+        world.ringsData([{ lat, lng }]);
+        
+        // Move a câmera suavemente para o país clicado
+        world.pointOfView({ lat, lng, altitude: 2 }, 1000);
+    })
+
+    // TOOLTIP PERSONALIZADO
+    .polygonLabel(({ properties: d }) => {
+        const stats = cyberData[d.NAME] || { leaks: "Monitorado", phishing: "Protegido", intrusions: "< 1k" };
+        return `
+            <div class="glass p-4 rounded-lg border border-emerald-500/50 shadow-2xl" 
+                 style="background: rgba(10, 10, 12, 0.95); pointer-events: none; color: white; min-width: 180px;">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <b class="text-emerald-400 text-lg uppercase tracking-tight">${d.NAME}</b>
+                </div>
+                <hr class="border-white/10 my-2">
+                <div class="space-y-1 text-xs mono">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Vazamentos:</span> 
+                        <span class="text-red-400 font-bold">${stats.leaks}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Phishing:</span> 
+                        <span class="text-yellow-400 font-bold">${stats.phishing}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Invasões:</span> 
+                        <span class="text-blue-400 font-bold">${stats.intrusions}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    })
+    .onPolygonHover(hoverD => world
+        .polygonCapColor(d => d === hoverD ? 'rgba(16, 185, 129, 0.5)' : 'rgba(16, 185, 129, 0.1)')
+    );
+
+// Carregar fronteiras GeoJSON
+fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson')
+    .then(res => res.json())
+    .then(countries => world.polygonsData(countries.features));
+
+// Controles Automáticos
+world.controls().autoRotate = true;
+world.controls().autoRotateSpeed = 0.5;
+world.controls().enableZoom = false;
+
+// Ajuste de Responsividade
+window.addEventListener("resize", () => {
+    world.width(document.getElementById('globeViz').offsetWidth);
+    world.height(document.getElementById('globeViz').offsetHeight);
+});
+
+        // --- LÓGICA DO RASTRO VERDE DINÂMICO ---
+let hueValue = 140; // Começa em um verde água
+let direction = 1;
+
+window.addEventListener('mousemove', (e) => {
+    const dot = document.createElement('div');
+    dot.className = 'trail-dot';
+    
+    // Define a posição
+    dot.style.left = `${e.clientX}px`;
+    dot.style.top = `${e.clientY}px`;
+
+    // Variação lenta da paleta verde (entre o tom 120 e 160 do HSL)
+    hueValue += 0.2 * direction;
+    if (hueValue > 160 || hueValue < 120) direction *= -1;
+
+    const color = `hsl(${hueValue}, 80%, 50%)`;
+    dot.style.backgroundColor = color;
+    dot.style.boxShadow = `0 0 10px ${color}`;
+
+    document.body.appendChild(dot);
+
+    // Remove o elemento após a animação terminar
+    setTimeout(() => {
+        dot.remove();
+    }, 700);
+});
+
+// --- LÓGICA DO HUD LOADER (3 SEGUNDOS + DICAS) ---
+const loaderText = document.getElementById('loader-text');
+const phrases = [
+    "[SYSTEM_BOOT_SEQUENCE...]",
+    "Já conferiu o proxy?",
+    "VPN GRÁTIS? kkkkkkkkk não brinca comigo...",
+    "Já alterou suas senhas esse ano?",
+    "O que será que tem na internet sobre você?",
+    "Achei você...",
+    "[ACCESS_GRANTED]"
+];
+
+let phraseIdx = 0;
+
+function typePhrase() {
+    if (phraseIdx < phrases.length) {
+        let i = 0;
+        loaderText.innerHTML = ""; // Limpa para a próxima frase
+        
+        function typeChar() {
+            if (i < phrases[phraseIdx].length) {
+                loaderText.innerHTML += phrases[phraseIdx].charAt(i);
+                i++;
+                setTimeout(typeChar, 30); // Velocidade da digitação
+            } else {
+                // Tempo que a frase fica exposta antes de mudar
+                setTimeout(() => {
+                    phraseIdx++;
+                    typePhrase();
+                }, 400); 
+            }
+        }
+        typeChar();
+    }
+}
+
+typePhrase();
+
+// Força o carregamento a durar pelo menos 3 segundos (3500ms para garantir as frases)
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.classList.add('loader-hidden');
+    }, 10800); 
+});
+
+    </script>
+</body>
+</html>
