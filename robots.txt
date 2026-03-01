@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Troque pelo link real do seu sitemap
+Sitemap: https://jgcyber.io/sitemap.xml
