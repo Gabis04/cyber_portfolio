@@ -262,12 +262,11 @@ window.addEventListener('mousemove', (e) => {
 const loaderText = document.getElementById('loader-text');
 const phrases = [
     "[SYSTEM_BOOT_SEQUENCE...]",
-    "Já conferiu o proxy?",
-    "VPN GRÁTIS? kkkkkkkkk não brinca comigo...",
-    "Já alterou suas senhas esse ano?",
-    "O que será que tem na internet sobre você?",
-    "Achei você...",
-    "[ACCESS_GRANTED]"
+    "Inicializando protocolos de segurança...",
+    "Verificando integridade dos dados...",
+    "Estabelecendo conexão criptografada...",
+    "Analisando métricas de risco...",
+    "[SECURE_CONNECTION_ESTABLISHED]"
 ];
 
 let phraseIdx = 0;
@@ -301,7 +300,7 @@ window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     setTimeout(() => {
         loader.classList.add('loader-hidden');
-    }, 10000); 
+    }, 1000); 
 });
 
 // --- ANIMAÇÃO DO CONTADOR LIVE ---
@@ -314,3 +313,21 @@ setInterval(() => {
     counterElement.style.color = '#10b981';
     setTimeout(() => counterElement.style.color = 'white', 200);
 }, 2000);
+
+// --- SCROLL REVEAL (ANIMAÇÃO AO ROLAR) ---
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Opcional: Parar de observar após animar uma vez
+            // observer.unobserve(entry.target); 
+        }
+    });
+}, {
+    root: null,
+    threshold: 0.15 // Ativa quando 15% do elemento estiver visível
+});
+
+revealElements.forEach(el => revealObserver.observe(el));
