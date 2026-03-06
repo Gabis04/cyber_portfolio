@@ -167,8 +167,8 @@
             <h2 class="text-emerald-500 mono font-bold">// SOLUÇÕES_CORPORATIVAS</h2>
             <h3 class="text-4xl font-bold uppercase tracking-tighter text-white">Proteção e Inteligência</h3>
         </div>
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-            <div class="card-service glass p-8 rounded-2xl relative group overflow-hidden reveal delay-100">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+            <div class="card-service service-osint glass p-8 rounded-2xl relative group overflow-hidden reveal delay-100">
                 <i class="fas fa-search-plus text-4xl text-emerald-500 mb-6 transition"></i>
                 <h4 class="text-xl font-bold mb-4 uppercase text-white">Inteligência Corporativa (OSINT)</h4>
                 <p class="text-gray-400 text-sm">Monitoramento de vazamento de dados, Due Diligence de parceiros e prevenção contra espionagem industrial.</p>
@@ -179,7 +179,7 @@
                     <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Análise de Reputação</li>
                 </ul>
             </div>
-            <div class="card-service glass p-8 rounded-2xl relative group overflow-hidden reveal delay-200">
+            <div class="card-service service-pentest glass p-8 rounded-2xl relative group overflow-hidden reveal delay-200">
                 <i class="fas fa-user-shield text-4xl text-emerald-500 mb-6 transition"></i>
                 <h4 class="text-xl font-bold mb-4 uppercase text-white">Pentest & Vulnerability</h4>
                 <p class="text-gray-400 text-sm">Testes de intrusão controlados para identificar e corrigir falhas antes que sejam exploradas por terceiros.</p>
@@ -190,7 +190,7 @@
                     <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Relatório Técnico & Executivo</li>
                 </ul>
             </div>
-            <div class="card-service glass p-8 rounded-2xl relative group overflow-hidden reveal delay-300">
+            <div class="card-service service-devsecops glass p-8 rounded-2xl relative group overflow-hidden reveal delay-300">
                 <i class="fas fa-microchip text-4xl text-emerald-500 mb-6 transition"></i>
                 <h4 class="text-xl font-bold mb-4 uppercase text-white">DevSecOps & Automação</h4>
                 <p class="text-gray-400 text-sm">Desenvolvimento de sistemas seguros e automação de processos para eficiência operacional.</p>
@@ -199,6 +199,17 @@
                     <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Automação de Processos (RPA)</li>
                     <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Hardening de Servidores</li>
                     <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Integração CI/CD Seguro</li>
+                </ul>
+            </div>
+            <div class="card-service service-identity glass p-8 rounded-2xl relative group overflow-hidden reveal delay-400">
+                <i class="fas fa-fingerprint text-4xl text-emerald-500 mb-6 transition"></i>
+                <h4 class="text-xl font-bold mb-4 uppercase text-white">Identidade Digital & Infra</h4>
+                <p class="text-gray-400 text-sm">Pacote completo: Criação de marca, desenvolvimento web e infraestrutura segura com Cloudflare.</p>
+                <ul class="mt-6 space-y-3 text-sm text-gray-400 border-t border-white/10 pt-6">
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Logo & Identidade Visual</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Site & Domínio Configurado</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Proteção Cloudflare (WAF)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i> Hospedagem Blindada</li>
                 </ul>
             </div>
         </div>
@@ -292,7 +303,7 @@
         </div>
         
         <!-- HUD: Legenda e Painel de Status -->
-        <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 flex flex-col md:flex-row justify-between items-end z-20 pointer-events-none">
+        <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 hidden md:flex flex-col md:flex-row justify-between items-end z-20 pointer-events-none">
             
             <!-- Legenda -->
             <div class="glass p-6 rounded-xl border border-white/10 pointer-events-auto mb-4 md:mb-0 backdrop-blur-md bg-black/60 min-w-[280px]">
@@ -366,7 +377,29 @@
             </div>
         </div>
 
-        <div id="globeViz" class="w-full h-[600px] md:h-[800px] cursor-grab active:cursor-grabbing"></div>
+        <div id="globeViz" class="hidden md:block w-full h-[800px] cursor-grab active:cursor-grabbing"></div>
+        <div id="threatMobileFallback" class="md:hidden px-6 pb-10 pt-4">
+            <div class="glass rounded-2xl p-6 border border-emerald-500/20">
+                <h4 class="mono text-emerald-400 text-xs uppercase tracking-widest mb-3">Threat Snapshot</h4>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Monitoramento em modo leve para mobile. Dados priorizados para rapidez e estabilidade.
+                </p>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="rounded-lg border border-red-500/30 bg-red-500/5 py-3">
+                        <div class="text-red-400 font-bold text-lg">High</div>
+                        <div class="text-[10px] text-gray-400 uppercase">Risco</div>
+                    </div>
+                    <div class="rounded-lg border border-yellow-500/30 bg-yellow-500/5 py-3">
+                        <div class="text-yellow-400 font-bold text-lg">Med</div>
+                        <div class="text-[10px] text-gray-400 uppercase">Alertas</div>
+                    </div>
+                    <div class="rounded-lg border border-emerald-500/30 bg-emerald-500/5 py-3">
+                        <div class="text-emerald-400 font-bold text-lg">OK</div>
+                        <div class="text-[10px] text-gray-400 uppercase">Status</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="contato" class="py-32 bg-black/60">

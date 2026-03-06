@@ -1,11 +1,12 @@
-// c:\Users\jgvsilva\Desktop\site pessoal\assets\js\main.js
+﻿// c:\Users\jgvsilva\Desktop\site pessoal\assets\js\main.js
 
-// PARTÍCULAS
+// --- PARTÍCULAS ---
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let particlesArray = [];
+const isTouchLike = window.matchMedia("(pointer: coarse)").matches;
 
 window.addEventListener("scroll", () => {
     const scrolled = window.scrollY;
@@ -33,7 +34,8 @@ class Particle {
 
 function init() {
     particlesArray = [];
-    for (let i = 0; i < 60; i++) particlesArray.push(new Particle());
+    const particleCount = isTouchLike ? 30 : 60;
+    for (let i = 0; i < particleCount; i++) particlesArray.push(new Particle());
 }
 
 function connectParticles() {
@@ -62,201 +64,177 @@ function animate() {
 }
 init(); animate();
 
-// GLOBO
-// --- 2. LÓGICA DO GLOBO (ATAQUES + BRILHO + FOCO) ---
+// --- GLOBO INTERATIVO (DESKTOP) + FALLBACK LEVE MOBILE ---
+const isMobileView = window.matchMedia("(max-width: 900px)").matches || window.matchMedia("(pointer: coarse)").matches;
+const globeElement = document.getElementById("globeViz");
 
-// Base de dados expandida para evitar "N/A" nos principais países
-const cyberData = {
-    // Américas
-    "Brazil": { leaks: "45.2M", phishing: "12.1M", intrusions: "1.2M" },
-    "United States of America": { leaks: "128.5M", phishing: "42.3M", intrusions: "5.1M" },
-    "Mexico": { leaks: "22.1M", phishing: "8.4M", intrusions: "600k" },
-    "Argentina": { leaks: "12.4M", phishing: "3.2M", intrusions: "150k" },
-    "Canada": { leaks: "18.2M", phishing: "6.1M", intrusions: "400k" },
-    "Colombia": { leaks: "9.5M", phishing: "2.8M", intrusions: "110k" },
-    "Chile": { leaks: "5.1M", phishing: "1.5M", intrusions: "85k" },
+function formatMetric(value) {
+    if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
+    if (value >= 1000) return `${Math.round(value / 1000)}k`;
+    return `${value}`;
+}
 
-    // Europa
-    "Russia": { leaks: "92.4M", phishing: "31.2M", intrusions: "8.4M" },
-    "Germany": { leaks: "15.8M", phishing: "5.2M", intrusions: "820k" },
-    "France": { leaks: "14.1M", phishing: "4.9M", intrusions: "750k" },
-    "United Kingdom": { leaks: "22.5M", phishing: "9.4M", intrusions: "1.1M" },
-    "Italy": { leaks: "11.2M", phishing: "3.1M", intrusions: "400k" },
-    "Spain": { leaks: "9.8M", phishing: "2.7M", intrusions: "320k" },
-    "Portugal": { leaks: "2.1M", phishing: "800k", intrusions: "45k" },
-    "Ukraine": { leaks: "35.2M", phishing: "10.1M", intrusions: "4.2M" },
-
-    // Ásia e Oceania
-    "China": { leaks: "215.4M", phishing: "82.5M", intrusions: "14.8M" },
-    "India": { leaks: "142.1M", phishing: "58.2M", intrusions: "9.2M" },
-    "Japan": { leaks: "10.5M", phishing: "2.1M", intrusions: "300k" },
-    "South Korea": { leaks: "12.8M", phishing: "4.2M", intrusions: "550k" },
-    "Australia": { leaks: "8.4M", phishing: "2.5M", intrusions: "210k" },
-    "Israel": { leaks: "18.2M", phishing: "7.4M", intrusions: "3.1M" },
-
-    // África
-    "South Africa": { leaks: "11.2M", phishing: "4.1M", intrusions: "280k" },
-    "Nigeria": { leaks: "15.4M", phishing: "9.2M", intrusions: "450k" },
-    "Egypt": { leaks: "8.1M", phishing: "2.4M", intrusions: "180k" }
-};
-
-// Coordenadas fixas dos principais países para garantir que os ataques saiam de terra firme
-const countryCoords = {
-    "Brazil": { lat: -14.235, lng: -51.925 },
-    "United States of America": { lat: 37.090, lng: -95.712 },
-    "China": { lat: 35.861, lng: 104.195 },
-    "Russia": { lat: 61.524, lng: 105.318 },
-    "India": { lat: 20.593, lng: 78.962 },
-    "Germany": { lat: 51.165, lng: 10.451 },
-    "United Kingdom": { lat: 55.378, lng: -3.436 },
-    "France": { lat: 46.227, lng: 2.213 },
-    "South Africa": { lat: -30.559, lng: 22.937 },
-    "Australia": { lat: -25.274, lng: 133.775 },
-    "Canada": { lat: 56.130, lng: -106.346 },
-    "Japan": { lat: 36.204, lng: 138.252 },
-    "Mexico": { lat: 23.634, lng: -102.552 },
-    "Ukraine": { lat: 48.379, lng: 31.165 },
-    "Israel": { lat: 31.046, lng: 34.851 }
-};
-
-// Gera ataques cibernéticos aleatórios (Arcos Animados)
-const arcsData = [...Array(40).keys()].map(() => {
-    // Seleciona países aleatórios da lista de coordenadas
-    const countries = Object.values(countryCoords);
-    const start = countries[Math.floor(Math.random() * countries.length)];
-    let end = countries[Math.floor(Math.random() * countries.length)];
-    
-    // Garante que o destino não seja o mesmo que a origem
-    while (start === end) end = countries[Math.floor(Math.random() * countries.length)];
-
-    return {
-        startLat: start.lat,
-        startLng: start.lng,
-        endLat: end.lat,
-        endLng: end.lng,
-        // Gradiente: Cor Sólida -> Transparente (Efeito de rastro/cometa)
-        color: [['#10b981', 'rgba(16, 185, 129, 0)'], ['#ef4444', 'rgba(239, 68, 68, 0)'], ['#3b82f6', 'rgba(59, 130, 246, 0)']][Math.floor(Math.random() * 3)],
-        altitude: Math.random() * 0.4 + 0.1, // Altura variada
-        gap: Math.random() * 3 + 1, // Intervalo aleatório para desincronizar
-        initialGap: Math.random() * 2 // Atraso inicial para não saírem todos juntos
+if (globeElement && !isMobileView && typeof Globe === "function") {
+    const countryAttackStats = {
+        "Brazil": { attacks: 1200000, phishing: 12100000, leaks: 45200000, risk: "Alto" },
+        "United States of America": { attacks: 5100000, phishing: 42300000, leaks: 128500000, risk: "Crítico" },
+        "Canada": { attacks: 400000, phishing: 6100000, leaks: 18200000, risk: "Médio" },
+        "Mexico": { attacks: 600000, phishing: 8400000, leaks: 22100000, risk: "Alto" },
+        "United Kingdom": { attacks: 1100000, phishing: 9400000, leaks: 22500000, risk: "Alto" },
+        "Germany": { attacks: 820000, phishing: 5200000, leaks: 15800000, risk: "Médio" },
+        "France": { attacks: 750000, phishing: 4900000, leaks: 14100000, risk: "Médio" },
+        "India": { attacks: 9200000, phishing: 58200000, leaks: 142100000, risk: "Crítico" },
+        "China": { attacks: 14800000, phishing: 82500000, leaks: 215400000, risk: "Crítico" },
+        "Japan": { attacks: 300000, phishing: 2100000, leaks: 10500000, risk: "Médio" },
+        "Australia": { attacks: 210000, phishing: 2500000, leaks: 8400000, risk: "Baixo" },
+        "South Africa": { attacks: 280000, phishing: 4100000, leaks: 11200000, risk: "Médio" },
+        "Nigeria": { attacks: 450000, phishing: 9200000, leaks: 15400000, risk: "Alto" },
+        "Egypt": { attacks: 180000, phishing: 2400000, leaks: 8100000, risk: "Baixo" }
     };
-});
 
-const world = Globe()
-    (document.getElementById('globeViz'))
-    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
-    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
-    .backgroundImageUrl(null)
-    
-    // Atmosfera (Glow Cyber)
-    .atmosphereColor('#10b981')
-    .atmosphereAltitude(0.15)
-    
-    // Configuração dos Ataques (Arcos)
-    .arcsData(arcsData)
-    .arcColor('color')
-    .arcAltitude('altitude')
-    .arcDashLength(0.4) // Rastro mais curto (parece um feixe)
-    .arcDashGap(d => d.gap) // Gap variável para fluxo contínuo
-    .arcDashInitialGap(d => d.initialGap) // Desincroniza o início
-    .arcDashAnimateTime(4000) // Mais lento (4 segundos)
-    .arcStroke(0.5)
-    
-    // Configuração do Brilho de Clique (Anéis pulsantes)
-    .ringColor(() => '#10b981')
-    .ringMaxRadius(10)
-    .ringPropagationSpeed(3)
-    .ringRepeatPeriod(800)
+    const nodes = [
+        { country: "Brazil", lat: -23.5505, lng: -46.6333, level: "high" },
+        { country: "United States of America", lat: 40.7128, lng: -74.0060, level: "high" },
+        { country: "Canada", lat: 43.6532, lng: -79.3832, level: "medium" },
+        { country: "Mexico", lat: 19.4326, lng: -99.1332, level: "medium" },
+        { country: "United Kingdom", lat: 51.5072, lng: -0.1276, level: "high" },
+        { country: "Germany", lat: 50.1109, lng: 8.6821, level: "medium" },
+        { country: "France", lat: 48.8566, lng: 2.3522, level: "medium" },
+        { country: "Spain", lat: 40.4168, lng: -3.7038, level: "low" },
+        { country: "Turkey", lat: 39.9334, lng: 32.8597, level: "medium" },
+        { country: "Saudi Arabia", lat: 24.7136, lng: 46.6753, level: "low" },
+        { country: "India", lat: 19.0760, lng: 72.8777, level: "high" },
+        { country: "China", lat: 39.9042, lng: 116.4074, level: "high" },
+        { country: "Japan", lat: 35.6895, lng: 139.6917, level: "medium" },
+        { country: "South Korea", lat: 37.5665, lng: 126.9780, level: "medium" },
+        { country: "Singapore", lat: 1.3521, lng: 103.8198, level: "medium" },
+        { country: "Indonesia", lat: -6.2088, lng: 106.8456, level: "medium" },
+        { country: "Australia", lat: -33.8688, lng: 151.2093, level: "low" },
+        { country: "South Africa", lat: -26.2041, lng: 28.0473, level: "medium" },
+        { country: "Nigeria", lat: 6.5244, lng: 3.3792, level: "high" },
+        { country: "Egypt", lat: 30.0444, lng: 31.2357, level: "low" }
+    ];
 
-    // Visual dos Países
-    .polygonCapColor(() => 'rgba(16, 185, 129, 0.1)')
-    .polygonSideColor(() => 'rgba(0, 0, 0, 0.2)')
-    .polygonStrokeColor(() => '#10b981')
-    
-    // INTERAÇÃO DE CLIQUE
-    .onPolygonClick((polygon, event, { lat, lng, altitude }) => {
-        // Cria o efeito de brilho no local exato do clique
-        world.ringsData([{ lat, lng }]);
+    const colors = {
+        high: { rgb: "239,68,68", point: "#f87171", stroke: 1.0 }, 
+        medium: { rgb: "59,130,246", point: "#60a5fa", stroke: 0.8 },
+        low: { rgb: "16,185,129", point: "#34d399", stroke: 0.6 }
+    };
+
+    function pickPair() {
+        let a = nodes[Math.floor(Math.random() * nodes.length)];
+        let b = nodes[Math.floor(Math.random() * nodes.length)];
+        let tries = 0;
+        while ((a === b || Math.hypot(a.lat - b.lat, a.lng - b.lng) < 28) && tries < 15) {
+            a = nodes[Math.floor(Math.random() * nodes.length)];
+            b = nodes[Math.floor(Math.random() * nodes.length)];
+            tries += 1;
+        }
+        return [a, b];
+    }
+
+    // --- INSTÂNCIA DO GLOBO ---
+    const world = Globe()(globeElement)
+        .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-dark.jpg")
+        .bumpImageUrl("https://unpkg.com/three-globe/example/img/earth-topology.png")
+        .backgroundImageUrl(null)
+        .atmosphereColor("#10b981")
+        .atmosphereAltitude(0.17)
+        .arcColor(d => [d.colorStart, d.colorEnd]) // Faz o degradê na rota inteira pro rastro ficar natural
+        .arcAltitude("arcAltitude")
+        .arcStroke("arcStroke")
         
-        // Move a câmera suavemente para o país clicado
-        world.pointOfView({ lat, lng, altitude: 2 }, 1000);
-    })
-
-    // TOOLTIP PERSONALIZADO
-    .polygonLabel(({ properties: d }) => {
-        const stats = cyberData[d.NAME] || { leaks: "Monitorado", phishing: "Protegido", intrusions: "< 1k" };
-        return `
-            <div class="glass p-4 rounded-lg border border-emerald-500/50 shadow-2xl" 
-                 style="background: rgba(10, 10, 12, 0.95); pointer-events: none; color: white; min-width: 180px;">
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                    <b class="text-emerald-400 text-xl uppercase tracking-tight">${d.NAME}</b>
+        // --- EFEITO COMETA / LASER ---
+        .arcDashLength(0.4) // Ocupa 40% da rota, criando o rastro
+        .arcDashGap(4) // Gap gigante para garantir que seja apenas 1 míssil por rota.
+        .arcDashInitialGap(() => 0) 
+        .arcDashAnimateTime("travelMs") 
+        .arcsTransitionDuration(0) 
+        // -----------------------------
+        
+        .arcLabel(d => `${d.fromLabel} -> ${d.toLabel}`)
+        .pointLat("lat")
+        .pointLng("lng")
+        .pointColor("color")
+        .pointAltitude(() => 0.01)
+        .pointRadius(() => 0.14)
+        .pointsMerge(true)
+        .polygonCapColor(() => "rgba(16,185,129,0.08)")
+        .polygonSideColor(() => "rgba(0,0,0,0.2)")
+        .polygonStrokeColor(() => "rgba(16,185,129,0.72)")
+        .polygonLabel(({ properties }) => {
+            const name = properties?.NAME || "Região";
+            const stats = countryAttackStats[name] || { attacks: 90000, phishing: 420000, leaks: 1700000, risk: "Monitorado" };
+            return `
+                <div class="glass p-4 rounded-lg border border-emerald-500/40"
+                     style="background: rgba(10,10,12,0.95); color: white; min-width: 180px;">
+                    <div class="text-emerald-400 text-sm font-bold uppercase mb-2">${name}</div>
+                    <div class="space-y-1 text-xs mono">
+                        <div class="flex justify-between"><span class="text-gray-400">Ataques:</span><span class="text-red-400">${formatMetric(stats.attacks)}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Phishing:</span><span class="text-yellow-300">${formatMetric(stats.phishing)}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Vazamentos:</span><span class="text-blue-300">${formatMetric(stats.leaks)}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Risco:</span><span class="text-emerald-300">${stats.risk}</span></div>
+                    </div>
                 </div>
-                <hr class="border-white/10 my-2">
-                <div class="space-y-1 text-sm mono">
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Vazamentos:</span> 
-                        <span class="text-red-400 font-bold">${stats.leaks}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Phishing:</span> 
-                        <span class="text-yellow-400 font-bold">${stats.phishing}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Invasões:</span> 
-                        <span class="text-blue-400 font-bold">${stats.intrusions}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    })
-    .onPolygonHover(hoverD => world
-        .polygonCapColor(d => d === hoverD ? 'rgba(16, 185, 129, 0.5)' : 'rgba(16, 185, 129, 0.1)')
-    );
+            `;
+        })
+        .onPolygonHover(hoverD => {
+            world
+                .polygonCapColor(d => (d === hoverD ? "rgba(16,185,129,0.34)" : "rgba(16,185,129,0.08)"))
+                .polygonStrokeColor(d => (d === hoverD ? "rgba(52,211,153,0.95)" : "rgba(16,185,129,0.72)"));
+        });
 
-// Carregar fronteiras GeoJSON
-fetch('https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson')
-    .then(res => res.json())
-    .then(countries => world.polygonsData(countries.features));
+    // Linhas de ataque desativadas
+    world.arcsData([]);
+    world.pointsData([]);
 
-// Controles Automáticos
-world.controls().autoRotate = true;
-world.controls().autoRotateSpeed = 0.5;
-world.controls().enableZoom = false;
+    // Carregamento do GeoJSON
+    fetch("https://raw.githubusercontent.com/vasturiano/globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson")
+        .then(res => res.json())
+        .then(countries => world.polygonsData(countries.features))
+        .catch(() => world.polygonsData([]));
 
-// Ajuste de Responsividade
-window.addEventListener("resize", () => {
-    world.width(document.getElementById('globeViz').offsetWidth);
-    world.height(document.getElementById('globeViz').offsetHeight);
-});
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.34;
+    world.controls().enableZoom = true;
+    world.controls().minDistance = 180;
+    world.controls().maxDistance = 410;
+    world.controls().enablePan = false;
+
+    world.width(globeElement.offsetWidth);
+    world.height(globeElement.offsetHeight);
+    window.addEventListener("resize", () => {
+        world.width(globeElement.offsetWidth);
+        world.height(globeElement.offsetHeight);
+    });
+}
 
 // --- LÓGICA DO RASTRO VERDE DINÂMICO ---
-let hueValue = 140; // Começa em um verde água
+let hueValue = 140; 
 let direction = 1;
 
-window.addEventListener('mousemove', (e) => {
-    const dot = document.createElement('div');
-    dot.className = 'trail-dot';
-    
-    // Define a posição
-    dot.style.left = `${e.clientX}px`;
-    dot.style.top = `${e.clientY}px`;
+if (!isTouchLike) {
+    window.addEventListener('mousemove', (e) => {
+        const dot = document.createElement('div');
+        dot.className = 'trail-dot';
+        
+        dot.style.left = `${e.clientX}px`;
+        dot.style.top = `${e.clientY}px`;
 
-    // Variação lenta da paleta verde (entre o tom 120 e 160 do HSL)
-    hueValue += 0.2 * direction;
-    if (hueValue > 160 || hueValue < 120) direction *= -1;
+        hueValue += 0.2 * direction;
+        if (hueValue > 160 || hueValue < 120) direction *= -1;
 
-    const color = `hsl(${hueValue}, 80%, 50%)`;
-    dot.style.backgroundColor = color;
-    dot.style.boxShadow = `0 0 10px ${color}`;
+        const color = `hsl(${hueValue}, 80%, 50%)`;
+        dot.style.backgroundColor = color;
+        dot.style.boxShadow = `0 0 10px ${color}`;
 
-    document.body.appendChild(dot);
+        document.body.appendChild(dot);
 
-    // Remove o elemento após a animação terminar
-    setTimeout(() => {
-        dot.remove();
-    }, 700);
-});
+        setTimeout(() => {
+            dot.remove();
+        }, 700);
+    });
+}
 
 // --- LÓGICA DO HUD LOADER (3 SEGUNDOS + DICAS) ---
 const loaderText = document.getElementById('loader-text');
@@ -274,15 +252,14 @@ let phraseIdx = 0;
 function typePhrase() {
     if (phraseIdx < phrases.length) {
         let i = 0;
-        loaderText.textContent = ""; // Limpa para a próxima frase (Mais seguro que innerHTML)
+        loaderText.textContent = ""; 
         
         function typeChar() {
             if (i < phrases[phraseIdx].length) {
                 loaderText.textContent += phrases[phraseIdx].charAt(i);
                 i++;
-                setTimeout(typeChar, 30); // Velocidade da digitação
+                setTimeout(typeChar, 30); 
             } else {
-                // Tempo que a frase fica exposta antes de mudar
                 setTimeout(() => {
                     phraseIdx++;
                     typePhrase();
@@ -295,7 +272,6 @@ function typePhrase() {
 
 typePhrase();
 
-// Força o carregamento a durar pelo menos 3 segundos (3500ms para garantir as frases)
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -306,10 +282,8 @@ window.addEventListener('load', () => {
 // --- ANIMAÇÃO DO CONTADOR LIVE ---
 const counterElement = document.getElementById('live-counter');
 setInterval(() => {
-    // Gera um número aleatório entre 800 e 950 para simular tráfego
     const randomValue = Math.floor(Math.random() * (950 - 800 + 1)) + 800;
     counterElement.innerText = randomValue;
-    // Adiciona um efeito de cor momentâneo
     counterElement.style.color = '#10b981';
     setTimeout(() => counterElement.style.color = 'white', 200);
 }, 2000);
@@ -321,13 +295,11 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('active');
-            // Opcional: Parar de observar após animar uma vez
-            // observer.unobserve(entry.target); 
         }
     });
 }, {
     root: null,
-    threshold: 0.15 // Ativa quando 15% do elemento estiver visível
+    threshold: 0.15 
 });
 
 revealElements.forEach(el => revealObserver.observe(el));

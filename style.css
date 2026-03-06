@@ -282,3 +282,183 @@ html, body, a, button {
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
+
+/* --- Hover System (Consistencia de Interacao) --- */
+.glow-hover {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.glow-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px -12px var(--emerald-glow);
+}
+
+.glow-hover::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    border: 1px solid rgba(16, 185, 129, 0);
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+}
+
+.glow-hover:hover::after {
+    border-color: rgba(16, 185, 129, 0.45);
+}
+
+nav .hidden a {
+    position: relative;
+    transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
+}
+
+nav .hidden a:hover {
+    transform: translateY(-1px);
+    text-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+}
+
+nav .hidden a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.9), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+nav .hidden a:hover::after {
+    transform: scaleX(1);
+}
+
+.hero-section a {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.hero-section a:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 15px 35px -18px rgba(16, 185, 129, 0.65);
+}
+
+.card-service {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-service::before,
+.card-service::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.5s ease;
+}
+
+.card-service::before {
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.03);
+    z-index: -2;
+}
+
+.card-service::after {
+    background: linear-gradient(165deg, rgba(10, 10, 12, 0.78), rgba(10, 10, 12, 0.92));
+    z-index: -1;
+}
+
+.card-service:hover::before {
+    opacity: 0.8;
+    transform: scale(1.07);
+}
+
+.service-osint::before {
+    background-image: url("https://images.unsplash.com/photo-1563206767-5b18f218e8de?q=80&w=1600&auto=format&fit=crop");
+}
+
+.service-pentest::before {
+    background-image: url("https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop");
+}
+
+.service-devsecops::before {
+    background-image: url("https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop");
+}
+
+.service-identity::before {
+    background-image: url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1600&auto=format&fit=crop");
+}
+
+.card-service i {
+    transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.card-service:hover i {
+    transform: translateY(-2px) scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
+}
+
+.card-market {
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card-market:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px -22px rgba(16, 185, 129, 0.75);
+    border-color: rgba(16, 185, 129, 0.45);
+}
+
+.tech-track span {
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.tech-track span:hover {
+    transform: translateY(-2px) scale(1.03);
+    color: #a7f3d0;
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+}
+
+#contato a {
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#contato a:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 16px 30px -18px rgba(16, 185, 129, 0.5);
+}
+
+#contato a i {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+#contato a:hover i {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glow-hover,
+    .hero-section a,
+    .card-service,
+    .card-market,
+    .tech-track span,
+    #contato a {
+        transition: none !important;
+    }
+
+    .glow-hover:hover,
+    .hero-section a:hover,
+    .card-service:hover,
+    .card-market:hover,
+    .tech-track span:hover,
+    #contato a:hover {
+        transform: none !important;
+    }
+}
